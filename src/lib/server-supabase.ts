@@ -12,7 +12,16 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll() {},
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            // Server Components cannot always set cookies. The proxy refreshes
+            // sessions before render and writes cookie changes to the response.
+          }
+        },
       },
     }
   );

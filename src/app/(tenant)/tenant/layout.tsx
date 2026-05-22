@@ -1,13 +1,12 @@
-export default function TenantLayout({
+import { AppShell } from "@/components/app-shell/AppShell";
+import { requireRole } from "@/lib/auth";
+
+export default async function TenantLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="border-b bg-white p-4">Tenant Navigation</nav>
+  await requireRole("tenant");
 
-      <main>{children}</main>
-    </div>
-  );
+  return <AppShell role="tenant">{children}</AppShell>;
 }

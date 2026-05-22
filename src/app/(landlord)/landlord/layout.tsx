@@ -1,13 +1,12 @@
-export default function LandlordLayout({
+import { AppShell } from "@/components/app-shell/AppShell";
+import { requireRole } from "@/lib/auth";
+
+export default async function LandlordLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-gray-200">
-      <nav className="border-b bg-white p-4">Landlord Navigation</nav>
+  await requireRole("landlord");
 
-      <main>{children}</main>
-    </div>
-  );
+  return <AppShell role="landlord">{children}</AppShell>;
 }
